@@ -13,6 +13,8 @@ This codebase automates provisioning of an HTTP service on AWS. Visit a demonstr
 
 ## Command Reference
 
+`rbenv install`
+
 `bundle exec rake deploy production`
 
 `bundle exec rake test`
