@@ -1,5 +1,6 @@
 # secrets
 *secrets.yml
+*.pem
 
 /.config
 /coverage/
