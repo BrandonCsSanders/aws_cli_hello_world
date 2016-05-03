@@ -66,11 +66,12 @@ Using the [Ubuntu Amazon EC2 AMI Locator](https://cloud-images.ubuntu.com/locato
 
 ```
 knife ec2 server create \
--VV \
+-V \
 -I ami-50946030 \
---ssh-key aws-chef-demo \
+--ssh-key parhamr-on-chef-demo \
 -f t2.micro \
 --ssh-user ubuntu \
+--user parhamr \
 --identity-file ./.chef/parhamr.pem \
 --region us-west-2 \
 --associate-public-ip \
@@ -80,7 +81,7 @@ knife ec2 server create \
 --ebs-size 10 \
 --ebs-volume-type gp2 \
 --security-group-ids sg-6a02380d \
---server-url https://54.191.229.20/ \
+--server-url https://54.191.229.20/organizations/aws-chef-demo \
 --no-node-verify-api-cert \
 --no-host-key-verify \
 --node-ssl-verify-mode none \
@@ -101,15 +102,16 @@ Command to test bootstrapping:
 
 ```
 knife bootstrap 52.11.71.100 \
--N i-06a4ad24756723d7f \
---server-url https://54.191.229.20/ \
+-N i-09e7555c14bae2f27 \
+--server-url https://54.191.229.20/organizations/aws-chef-demo \
 --ssh-identity-file ./.chef/parhamr.pem \
---key ./.chef/parhamr.pem
+--key ./.chef/parhamr.pem \
 --no-node-verify-api-cert \
 --no-host-key-verify \
 --node-ssl-verify-mode none \
 --run-list "recipe[nginx]" \
 --ssh-user ubuntu \
+--user parhamr \
 -V
 ```
 
