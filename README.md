@@ -62,7 +62,17 @@ ERROR: You did not provide a valid 'AWS Secret Access Key' value.
 
 ## Build a target machine
 
-Using the [Ubuntu Amazon EC2 AMI Locator](https://cloud-images.ubuntu.com/locator/ec2/) shows that `ami-50946030` is the target AMI. With SSH key `MBPRP15` and desired instance size `t2.micro`, the provisioning call becomes:
+### Dependencies
+
+ - An Ubuntu 14.04 LTS AMI ID; use the [Amazon EC2 AMI Locator](https://cloud-images.ubuntu.com/locator/ec2/) (match the region, use `hvm` for VPC compatibility)
+ - The pre-configured username of the above AMI that has `sudoer` permissions (`ubuntu`)
+ - One [AWS Elastic IP](https://us-west-2.console.aws.amazon.com/vpc/home?region=us-west-2#eips:)
+ - An [EC2 keypair](https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#KeyPairs:sort=keyName)
+ - The [AWS Subnet ID](https://us-west-2.console.aws.amazon.com/vpc/home?region=us-west-2#subnets:) for the active VPC associated with the AWS account (and matching the desired availability zone of `us-west-2b`)
+
+### Commands
+
+Using the [Ubuntu Amazon EC2 AMI Locator](https://cloud-images.ubuntu.com/locator/ec2/) shows that `ami-50946030` is the target AMI. With SSH key `parhamr-on-chef-demo` and desired instance size `t2.micro`, the provisioning call becomes:
 
 ```
 knife ec2 server create \
@@ -90,6 +100,9 @@ knife ec2 server create \
 
 Note that the `knife ec2` commands use `--identity-file` but other Knife commands (e.g. `bootstrap`) have deprecated that option in favor of `--ssh-identity-file`.
 
+Success of the above should return `Chef Client finished`, a summary list of the EC2 node attributes, and the test route of http://52.11.71.100/hello should display `Hello World`.
+
+## Debugging
 
 Helpful links:
 
@@ -113,3 +126,13 @@ knife bootstrap 52.11.71.100 \
 --user parhamr \
 -V
 ```
+
+Common errors:
+
+ - Wrong user account against Chef Server: `Failed to authenticate ubuntu - trying password auth` (user `parhamr` was associated; user `ubuntu` was the SSH user for the target node)
+ - Elastic IP is (still) allocated: `ERROR: Elastic IP requested is not available.` (if an ec2 server was recently deleted then wait another minute; see also `knife ec2 server list`)
+ - The Validator should be removed: `Doing old-style registration with the validation key at …` (the user-specific keypair is more reliable and clear)
+ - Incorrect Chef Server full URI: `ERROR: The object you are looking for could not be found`, and HTML output (use the full path to the Chef Server organization)
+ - Mis-match of the host key from repeatedly testing this process: `fingerprint 57:ee:45:f8:f3:ec:d5:86:26:22:9e:95:d5:ae:7b:4f does not match for "52.11.71.100" (Net::SSH::HostKeyMismatch)` (skip the checks with configuration adjustments or automate the cleanup tasks of removing entries for previous hosts)
+ - Use a real SSL certificate: `hostname "54.191.229.20" does not match the server certificate` (or use risky settings to skip verification)
+ - Likely a mis-matched SSH key: `DEBUG: HTTP 1.1 404 Not Found \n DEBUG: Expected JSON response, but got content-type 'text/html'` (check for agreement between body of `-----BEGIN PUBLIC KEY-----` and known public key)
