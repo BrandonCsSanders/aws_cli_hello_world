@@ -35,7 +35,30 @@ MBP15RP:aws_cli_hello_world reidparham$ knife client list
 aws-chef-demo-validator
 ```
 
-## Command Reference
+## Configuration
+
+1. Obtain Access Keys using instructions in https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html
+2. Rename file `config/secrets-example.yml` as `config/secrets.yml`
+3. Replace the contents of `secrets.yml` with the values obtained in step 1
+4. Run `knife ec2 server list` to check for a working Knife EC2 configuration
+
+Success at step four should return:
+
+```
+MBP15RP:aws_cli_hello_world reidparham$ knife ec2 server list
+Instance ID  Name  Public IP      Private IP     Flavor     Image         SSH Key        Security Groups  IAM Profile    State
+i-redacted         54.191.229.20  172.31.46.169  t2.medium  ami-redacted  aws-chef-demo  launch-wizard-1  Chef-EC2-Demo  running
+```
+
+Error messages at step four should be informative; example:
+
+```
+MBP15RP:aws_cli_hello_world reidparham$ knife ec2 server list
+ERROR: You did not provide a valid 'AWS Access Key Id' value.
+ERROR: You did not provide a valid 'AWS Secret Access Key' value.
+```
+
+## Appendix
 
 `rbenv install`
 
