@@ -1,6 +1,6 @@
 # Hello World through the AWS CLI
 
-This codebase automates provisioning of an HTTP service on AWS. Visit a demonstration at http://tbd/hello to see the `Hello World` response. The web service runs on Ubuntu 14.04 LTS and joins a Chef organization [“AWS Chef Demo”](https://54.191.229.20/organizations/aws-chef-demo) without supervision on boot.
+This codebase automates provisioning of an HTTP service on AWS. Visit a demonstration at http://52.11.71.100/hello to see the `Hello World` response. The web service runs on Ubuntu 14.04 LTS and joins a Chef organization [“AWS Chef Demo”](https://54.191.229.20/organizations/aws-chef-demo) without supervision on boot.
 
 The Chef Server version is `12.4.1-1` (from https://docs.chef.io/aws_marketplace.html).
 
