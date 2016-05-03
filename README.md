@@ -113,11 +113,3 @@ knife bootstrap 52.11.71.100 \
 --user parhamr \
 -V
 ```
-
-## Appendix
-
-`rbenv install`
-
-`bundle exec rake deploy production`
-
-`bundle exec rake test`
