@@ -2,6 +2,7 @@
 *secrets.yml
 *.pem
 .chef/trusted_certs
+.chef/syntaxcache
 
 /.config
 /coverage/

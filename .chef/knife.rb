@@ -10,6 +10,8 @@ validation_client_name   "aws-chef-demo-validator"
 validation_key           "#{current_dir}/aws-chef-demo-validator.pem"
 chef_server_url          "https://ec2-54-191-229-20.us-west-2.compute.amazonaws.com/organizations/aws-chef-demo"
 cookbook_path            ["#{current_dir}/../cookbooks"]
+# unfortunate but this prevents SSL Validation failure connecting to host: 54.191.229.20
+ssl_verify_mode          :verify_none
 
 # now add AWS-specific Knife configs
 knife[:region]   = 'us-west-2'

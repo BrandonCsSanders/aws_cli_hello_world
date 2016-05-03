@@ -58,6 +58,61 @@ ERROR: You did not provide a valid 'AWS Access Key Id' value.
 ERROR: You did not provide a valid 'AWS Secret Access Key' value.
 ```
 
+# Operations
+
+## Build a target machine
+
+Using the [Ubuntu Amazon EC2 AMI Locator](https://cloud-images.ubuntu.com/locator/ec2/) shows that `ami-50946030` is the target AMI. With SSH key `MBPRP15` and desired instance size `t2.micro`, the provisioning call becomes:
+
+```
+knife ec2 server create \
+-VV \
+-I ami-50946030 \
+--ssh-key aws-chef-demo \
+-f t2.micro \
+--ssh-user ubuntu \
+--identity-file ./.chef/parhamr.pem \
+--region us-west-2 \
+--associate-public-ip \
+--associate-eip 52.11.71.100 \
+--subnet subnet-6daa661b \
+--server-connect-attribute public_ip_address \
+--ebs-size 10 \
+--ebs-volume-type gp2 \
+--security-group-ids sg-6a02380d \
+--server-url https://54.191.229.20/ \
+--no-node-verify-api-cert \
+--no-host-key-verify \
+--node-ssl-verify-mode none \
+--run-list "recipe[nginx]" \
+--json-attributes '{"organization": "aws-chef-demo"}'
+```
+
+Note that the `knife ec2` commands use `--identity-file` but other Knife commands (e.g. `bootstrap`) have deprecated that option in favor of `--ssh-identity-file`.
+
+
+Helpful links:
+
+ - http://clarkdave.net/2013/05/creating-ec2-instances-in-an-amazon-vpc-using-chef-and-knife/
+ - https://stackoverflow.com/questions/16451762/using-knife-ec2-plugin-to-create-vm-in-vpc-private-subnet
+ - https://stackoverflow.com/questions/19701648/how-to-launch-amazon-ec2-instance-inside-vpc-using-chef-without-using-a-gateway
+
+Command to test bootstrapping:
+
+```
+knife bootstrap 52.11.71.100 \
+-N i-06a4ad24756723d7f \
+--server-url https://54.191.229.20/ \
+--ssh-identity-file ./.chef/parhamr.pem \
+--key ./.chef/parhamr.pem
+--no-node-verify-api-cert \
+--no-host-key-verify \
+--node-ssl-verify-mode none \
+--run-list "recipe[nginx]" \
+--ssh-user ubuntu \
+-V
+```
+
 ## Appendix
 
 `rbenv install`
