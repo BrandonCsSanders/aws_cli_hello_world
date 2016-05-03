@@ -8,9 +8,8 @@ The Chef Server version is `12.4.1-1` (from https://docs.chef.io/aws_marketplace
 
 ## Dependencies
 
-1. [Chef Development Kit](https://downloads.chef.io/chef-dk/); version `~> 0.13.21`
-2. Ruby ([rbenv](https://github.com/rbenv/rbenv) preferred; [RVM](https://rvm.io/) untested but assumed interoperable)
-3. [Bundler gem](http://bundler.io/)
+1. Ruby ([rbenv](https://github.com/rbenv/rbenv) preferred; [RVM](https://rvm.io/) untested but assumed interoperable)
+2. [Bundler gem](http://bundler.io/)
 
 ### Installation
 
