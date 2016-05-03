@@ -85,8 +85,7 @@ knife ec2 server create \
 --no-node-verify-api-cert \
 --no-host-key-verify \
 --node-ssl-verify-mode none \
---run-list "recipe[nginx]" \
---json-attributes '{"organization": "aws-chef-demo"}'
+--run-list "recipe[nginx]"
 ```
 
 Note that the `knife ec2` commands use `--identity-file` but other Knife commands (e.g. `bootstrap`) have deprecated that option in favor of `--ssh-identity-file`.
