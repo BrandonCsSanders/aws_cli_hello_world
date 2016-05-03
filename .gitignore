@@ -1,6 +1,7 @@
 # secrets
 *secrets.yml
 *.pem
+.chef/trusted_certs
 
 /.config
 /coverage/
