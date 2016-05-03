@@ -15,6 +15,12 @@ package 'nginx-core' do
   action :install
 end
 
+service 'nginx' do
+  action     :enable
+  # NOTE: openssl upgrades mean we need to reload new SSL links
+  subscribes :restart, 'package[openssl]', :delayed
+end
+
 cookbook_file '/etc/nginx/nginx.conf' do
   source   'nginx.conf'
   owner    'root'
